@@ -22,10 +22,133 @@ const map = new mapboxgl.Map({
   center: [-84.3880, 33.7490],
   zoom: 11.7
 });
-var popup = new mapboxgl.Popup({closeOnClick: false})
-  .setLngLat([-84.3880, 33.7490])
-  .setHTML('<h1>Hello World!</h1>')
-  .addTo(map);
+map.on('load', function () {
+    // Add a layer showing the places.
+    map.addLayer({
+        "id": "places",
+        "type": "symbol",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "FeatureCollection",
+                "features": [{
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>Atlanta Cyclorama & Civil War Museum</strong><p><a href=\"http://www.atlantahistorycenter.com/explore/destinations/atlanta-cyclorama\" target=\"_blank\" title=\"Opens in a new window\">Atlanta Cyclorama & Civil War Museum</a> is a museam with a panoramic 3D painting of the famous Civil War Battle of Atlanta. 12:00-6:00 p.m.</p>",
+                        "icon": "star"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-84.3709903, 33.7340711]
+                    }
+                }, {
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>Smyrna Welcome Center</strong><p><a href=\"http://smyrnahistory.org/_welcomecenter.htm\" target=\"_blank\" title=\"Opens in a new window\">The Smyrna Welcome Center</a> is located next door to the Smyrna Museum and is operated by the city. It has no affiliation with the <br>Smyrna Historical and Genealogical Society and this information is posted to this website as a courtesy. 8:00-11:00 p.m. <br>$10 general admission, $20 admission and two hour open bar.</p>",
+                        "icon": "star"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-84.5138282, 33.8832905]
+                    }
+                }, {
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>Hanson Cars</strong><p><a href=\"http://www.american-automobiles.com/Hanson.html\" target=\"_blank\" title=\"Opens in a new window\">Hanson Cars</a> The Hanson was one of the few American Automobiles ever built in the South and Georgia. <br>George Washington Hanson was the driving force behind The Hanson Motor Co. $25.</p>",
+                        "icon": "star"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-84.548579, 33.7675805]
+                    }
+                }, {
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>SkyView Atlanta</strong><p>The <a href=\"http://www.skyviewatlanta.com/\" target=\"_blank\" title=\"Opens in a new window\">Skyview Atlanta</a> wheel features 42 climate-controlled gondolas providing guests with breathtaking panoramic views of downtown Atlanta and the surrounding metropolitan area.. 10:00-4:00 p.m.</p>",
+                        "icon": "star"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-84.391906, 33.7588906]
+                    }
+                }, {
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>The Tabernacle</strong><p>The <a href=\"http://www.tabernacleatl.com/\" target=\"_blank\" title=\"Opens in a new window\">Tabernacle</a> is an old Baptist Church that has been converted into one of the best venues to watch live music in ATL. 11:00-7:00 p.m.</p>",
+                        "icon": "star"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-84.3936374, 33.7586691]
+                    }
+                }, {
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>Inside CNN Studio Tour</strong><p>Get behind the scenes of <a href=\"https://www.cnn.com\" target=\"_blank\" title=\"Opens in a new window\">Cable News Network</a>  which is based right here in Atlanta, Ga. A 50-minute guided walking tour lets you peek into the newsroom, control room and much more. 4:30 p.m. Free.</p>",
+                        "icon": "star"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-84.3949548, 33.7581174]
+                    }
+                }, {
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>Coca-Cola Company</strong><p>The <a href=\"http://www.coca-cola.com/global/\" target=\"_blank\" title=\"Opens in a new window\">Coca-Cola Company</a> does tours every day from 9:00 p.m. $12.</p>",
+                        "icon": "star"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-84.3994697, 33.7711532]
+                    }
+                }, {
+                    "type": "Feature",
+                    "properties": {
+                        "description": "<strong>The Georgia Acquarium</strong><p>Don't miss your chance to visit <a href=\"https://www.georgiaaquarium.org/\" target=\"_blank\" title=\"Opens in a new window\"><em>The GA Acquarium</em></a>, one of the worlds largest and it even has a Whale Shark!. 8:00 p.m.</p>",
+                        "icon": "star"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-84.3972985, 33.7633864]
+                    }
+                }]
+            }
+        },
+        "layout": {
+            "icon-image": "{icon}-15",
+            "icon-allow-overlap": true
+        }
+    });
+
+    // When a click event occurs on a feature in the places layer, open a popup at the
+    // location of the feature, with description HTML from its properties.
+    map.on('click', 'places', function (e) {
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var description = e.features[0].properties.description;
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(map);
+    });
+
+    // Change the cursor to a pointer when the mouse is over the places layer.
+    map.on('mouseenter', 'places', function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'places', function () {
+        map.getCanvas().style.cursor = '';
+    });
+});
 </script>
 
 </body>
