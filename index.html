@@ -107,13 +107,13 @@
 
         .first-column {
             float: left;
-            width: 48%;
+            width: 100%;
             padding-right: 20px;
         }
 
         .column {
             float: left;
-            width: 48%;
+            width: 100%;
         }
 
         /* Clear floats after the columns */
@@ -147,36 +147,41 @@
     <iframe src="map.html" width="100%" height="440px"></iframe>
     <section>
         <a href='map.html' class="linkbox">Full-screen version</a>
-
+        <img class="max-image-width" src="panorama.jpg"
+            title="Atlanta Skyline">
+        <div class="linkbox">Photo Credit: pixels.com</div>
         <img src="peach-svg-1.png" class="svg-title">
-        <h1>Hanging Rock Location and Facts</h1>
-        <h2>University of Kentucky Geography</h2>
+        <h1>Points of Interest in Atlanta, Georgia</h1>
+        <h2>University of Kentucky - Department of Geography</h2>
         <div class="row">
             <div class="first-column">
                 <p>
-                    Hanging Rock is located in Lancaster County, South Carolina, near what is the present day town of Heath Springs.
-                    It was a British post garrisoned by the Prince of Wales' American Regiment, part of the British legion,
-                    and a large force of Loyalists, all under the command of Major John Carden. On August 6, 1780, General Thomas Sumter made
-                    an attack on this position with a band of Patriot militia and won a great victory, although short of ammunition and outnumbered
-                    two to one. Among the impressive rock formations in the vicinity of the battlefield is the huge boulder known as the Hanging Rock.
+                  Atlanta is the capital of, and the most populous city in, the U.S. state of Georgia.
+                  With an estimated 2017 population of 486,290, it is also the 38th most-populous city
+                  in the United States. The city serves as the cultural and economic center of the Atlanta
+                  metropolitan area, home to 5.8 million people and the ninth-largest metropolitan area in
+                  the nation. Atlanta is the seat of Fulton County and a small portion of the city extends
+                  eastward into DeKalb County.
                 </p>
                 <p>
-                    The pillars GeoJSON file was provided by University of Kentucky.
-                    Data accessed August, 2018. Contours were extracted from a USGS NED 1/3 arc-second raster digital
-                    elevation model. This data can be accessed at the USGS 3D Elevation Program (<a href="https://www.usgs.gov/core-science-systems/ngp/3dep">usgs.gov</a>)
+                  For my final project I decided to do a continuation of module 9 using MapBox. I chose to identify some popular
+                  destinations to visit when you are visiting "Hotlanta". I wanted to make a web map that was a little more
+                  interactive so I created a style on MapBox and used that as a template to add pop-up boxes with information about
+                  each of the destinations. If you click on any of the stars it will have a link to the website of the organization
+                  they represent as well as a brief description of the location.
                 </p>
                 <h3>Tools used in this project</h3>
                 <ul>
-                    <li>PostGIS was used to store/query the national dataset.</li>
+                    <li>The PoI data was harvested from Open Street Map and yours truely</li>
                     <li>Data is shown on Mapbox web map with geolocation services enabled. If the map got popular it would require a fee to use.</li>
-                    <li>GDAL and QGIS 3.2 to convert raster elevation units and create contours.</li>
+                    <li>QGIS 3.2 to convert Open Street Map data and export as GeoJSON</li>
                 </ul>
 
 
                 <hr>
                 <h3>Project assets</h3>
                 <ul>
-                    <li><a href="arches_us.geojson" download>point locations GeoJSON</a></li>
+                    <li><a href="atlAttractions.geojson" download>point locations GeoJSON</a></li>
                 </ul>
                 </p>
 
@@ -192,12 +197,7 @@
 
 
             </div>
-            <div class="column">
-                <img class="max-image-width" src="hrock6.jpg"
-                    title="Hanging Rock">
-                <div class="linkbox">Photo Credit: Online Institute for Loyalist Studies</div>
 
-            </div>
         </div>
 
 
